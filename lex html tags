@@ -1,0 +1,25 @@
+Input Source Program: 
+<html>
+<body>
+<h1>My First Heading</h1>
+<p>My first paragraph.</p>
+</body>
+</html>
+%{
+int tags;
+%}
+%%
+"<"[^>]*>  { tags++;}
+.|\n {}
+%%
+int yywrap(void) 
+{
+return 1; 
+}
+int main(int argc, char *argv[]) {
+yyin = fopen(argv[1],"r");
+yylex();
+printf("\n Number of html tags: %d",tags);
+fclose(yyin);
+}
+
